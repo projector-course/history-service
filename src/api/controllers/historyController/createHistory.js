@@ -4,7 +4,7 @@ const db = require('../../../db/models');
 const logger = getModuleLogger(module);
 logger.debug('CONTROLLER CREATED');
 
-const createHistory = async (userId, videoId) => {
+const createHistory = async ({ userId, videoId }) => {
   const result = await db.history.create({
     userId,
     videoId,
