@@ -4,13 +4,11 @@ const db = require('../../../db/models');
 const logger = getModuleLogger(module);
 logger.debug('CONTROLLER CREATED');
 
-const getHistory = async ({ userId, limit }) => {
-  const result = await db.history.findAll({
+function getHistory({ userId, limit }) {
+  return db.history.findAll({
     limit,
     where: { userId },
   });
-
-  return result;
-};
+}
 
 module.exports = { getHistory };

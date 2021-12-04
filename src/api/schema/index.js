@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const isId = Joi.number().integer().min(0);
+const isId = Joi.number().integer().min(0).required();
 
 const isLimit = Joi.custom((limit, helpers) => {
   if (!limit) return undefined;
