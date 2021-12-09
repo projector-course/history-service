@@ -14,9 +14,9 @@ const createHistorySchema = Joi.object({
   videoId: isId,
 });
 
-const querySchema = Joi.object({
+const getHistorySchema = Joi.object({
   userId: isId,
   limit: isLimit,
 });
 
-module.exports = { createHistorySchema, querySchema };
+module.exports = { createHistorySchema, getHistorySchema };

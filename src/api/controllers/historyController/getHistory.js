@@ -6,8 +6,8 @@ logger.debug('CONTROLLER CREATED');
 
 function getHistory({ userId, limit }) {
   return db.history.findAll({
-    limit,
-    where: { userId },
+    limit: +limit || undefined,
+    where: { userId: +userId },
   });
 }
 

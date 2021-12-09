@@ -1,13 +1,30 @@
 const Router = require('@koa/router');
-const { postHistoryRoute } = require('./postHistoryRoute');
-const { getHistoryRoute } = require('./getHistoryRoute');
-const { verifyHistoryData } = require('../../../middlewares/verifyHistoryData');
-const { verifyQuery } = require('../../../middlewares/verifyQuery');
+const { validate } = require('../../../middlewares/validator');
+const { writeHistory } = require('../../controllers/historyController/writeHistory');
+const { getHistory } = require('../../controllers/historyController/getHistory');
 
 const router = new Router();
 
-router
-  .post('/', verifyHistoryData, postHistoryRoute)
-  .get('/', verifyQuery, getHistoryRoute);
+/*
+- POST  /history { data: { userId, videoId } }  => создаём запись истории
+- GET   /history ? userId=&limit=               => получаем историю юзера
+*/
+
+router.post('/', validate.post, async (ctx) => {
+  const { path, request: { body } } = ctx;
+  ctx.log.debug('ROUTE: %s', path);
+
+  const [created, history] = await writeHistory(body);
+
+  ctx.status = created ? 201 : 200;
+  ctx.body = history;
+});
+
+router.get('/', validate.get, async (ctx) => {
+  const { path, query } = ctx;
+  ctx.log.debug('ROUTE: %s', path);
+
+  ctx.body = await getHistory(query);
+});
 
 module.exports = { historyRouter: router };

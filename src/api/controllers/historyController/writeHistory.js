@@ -4,19 +4,21 @@ const db = require('../../../db/models');
 const logger = getModuleLogger(module);
 logger.debug('CONTROLLER CREATED');
 
-async function writeHistory(history) {
-  let result = await db.history.findOne({ where: history });
+async function writeHistory(data) {
+  let history = await db.history.findOne({ where: data });
 
-  if (result) {
-    [, [result]] = await db.history.update(
-      history,
-      { where: { id: result.id }, returning: true },
-    );
-    return [false, result];
+  /* create history */
+  if (!history) {
+    history = await db.history.create(data);
+    return [true, history];
   }
 
-  result = await db.history.create(history);
-  return [true, result];
+  /* update history */
+  [, [history]] = await db.history.update(
+    data,
+    { where: { id: history.id }, returning: true },
+  );
+  return [false, history];
 }
 
 module.exports = { writeHistory };
