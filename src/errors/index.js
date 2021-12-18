@@ -1,9 +1,9 @@
-class BadTokenError extends Error {
-  constructor(message = 'Bad token') {
+class ServiceKeyError extends Error {
+  constructor(message = 'Bad service key') {
     super(message);
-    this.name = 'BadTokenError';
-    this.status = 400;
+    this.name = 'ServiceKeyError';
+    this.status = 401;
   }
 }
 
-module.exports = { BadTokenError };
+module.exports = { ServiceKeyError };

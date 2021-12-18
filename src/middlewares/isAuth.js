@@ -1,15 +1,16 @@
-const crypto = require('../utils/crypto');
+const { checkServiceKey } = require('../utils/chekServiceKey');
+const { readToken } = require('../utils/crypto');
 
 const isAuth = async (ctx, next) => {
   const { headers } = ctx;
 
-  const { 'x-token': token, 'x-service-token': serviceToken } = headers;
+  const { 'x-token': token, 'x-service-key': serviceKey } = headers;
 
-  if (!token || !serviceToken) ctx.throw(401);
+  if (!token || !serviceKey) ctx.throw(401);
 
-  crypto.checkToken(serviceToken);
+  checkServiceKey(serviceKey);
 
-  const { data } = crypto.readToken(token);
+  const { data } = readToken(token);
 
   ctx.user = data;
 
