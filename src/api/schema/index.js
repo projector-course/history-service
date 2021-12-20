@@ -15,7 +15,6 @@ const createHistorySchema = Joi.object({
 });
 
 const getHistorySchema = Joi.object({
-  userId: isId,
   limit: isLimit,
 });
 
