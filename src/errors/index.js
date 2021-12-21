@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 class ServiceKeyError extends Error {
   constructor(message = 'Bad service key') {
     super(message);
@@ -6,4 +7,11 @@ class ServiceKeyError extends Error {
   }
 }
 
-module.exports = { ServiceKeyError };
+class BadMessageError extends Error {
+  constructor(message = 'Bad message') {
+    super(message);
+    this.name = 'BadMessageError';
+  }
+}
+
+module.exports = { ServiceKeyError, BadMessageError };
