@@ -16,7 +16,8 @@ async function connectAmqp(callback) {
   await channel.bindQueue(queue.queue, AMQP_EXCHANGE_NAME, AMQP_EVENT);
 
   channel.consume(AMQP_QUEUE_NAME, async (m) => {
-    await callback(m.content).then(() => channel.ack(m));
+    await callback(m.content);
+    await channel.ack(m);
   });
 }
 
