@@ -1,6 +1,8 @@
 const Koa = require('koa');
 const getParser = require('koa-bodyparser');
 const { getModuleLogger } = require('./services/logService');
+const { connectAmqp } = require('./services/amqp');
+const { writeHistoryMessage } = require('./api/controllers/historyController/writeHistoryMessage');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { getMetrics } = require('./middlewares/getMetrics');
 const { koaLogger } = require('./middlewares/koaLogger');
@@ -9,6 +11,8 @@ const { PORT, BASE_URL, SERVICE_NAME } = require('./services/configService');
 
 const logger = getModuleLogger(module);
 logger.debug('APP CREATED');
+
+connectAmqp(writeHistoryMessage);
 
 new Koa()
   .use(errorHandler)

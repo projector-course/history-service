@@ -8,8 +8,7 @@ const router = new Router({ prefix });
 /*
 - GET   /history/health
 
-- POST  /history { data: { userId, videoId } }  => создаём запись истории
-- GET   /history ? limit=                       => получаем историю юзера
+- GET   /history ? limit=   => получаем историю юзера
 */
 
 router
